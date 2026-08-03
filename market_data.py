@@ -1,10 +1,9 @@
 import requests
 from config import BASE_URL, OANDA_ACCOUNT_ID, OANDA_API_KEY
-import pandas as pd
 
 
-def fetch_candles(symbol: str, granularity: str, count: int = 100) -> pd.DataFrame:
-    """Fetches historical candlestick data from OANDA v20 API and returns a DataFrame."""
+def fetch_candles(symbol: str, granularity: str, count: int = 100) -> dict:
+    """Fetches historical candlestick data from OANDA v20 API."""
     url = f"{BASE_URL}/v3/instruments/{symbol}/candles"
     headers = {
         "Authorization": f"Bearer {OANDA_API_KEY}",
@@ -25,19 +24,17 @@ def fetch_candles(symbol: str, granularity: str, count: int = 100) -> pd.DataFra
             for c in res_json["candles"]:
                 if c.get("complete") or c == res_json["candles"][-1]:
                     formatted_values.append({
-                        "time": c["time"],
+                        "datetime": c["time"],
                         "open": float(c["mid"]["o"]),
                         "high": float(c["mid"]["h"]),
                         "low": float(c["mid"]["l"]),
                         "close": float(c["mid"]["c"]),
                         "volume": int(c["volume"])
                     })
-            df = pd.DataFrame(formatted_values)
-            return df
-        return pd.DataFrame()
+            return {"values": formatted_values}
+        return {"error": res_json.get("errorMessage", "Unknown API error")}
     except Exception as e:
-        print(f"[API Error] {e}")
-        return pd.DataFrame()
+        return {"error": str(e)}
 
 
 def fetch_live_price(symbol: str) -> dict | None:
