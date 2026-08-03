@@ -3,7 +3,7 @@ import time
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-from api.market_data import fetch_candles
+from market_data import fetch_candles
 from indicators.technical import calculate_indicators
 
 # Page Configuration
