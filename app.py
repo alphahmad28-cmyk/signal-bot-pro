@@ -6,17 +6,13 @@ import streamlit as st
 from market_data import fetch_candles
 from technical import calculate_indicators
 
-import streamlit as st
 
-st.set_page_config(
-    page_title="Vital Forex",
-    page_icon="⚡",
-    layout="wide"
-)
+
+
 
 # Page Configuration
 st.set_page_config(
-    page_title="Signal Bot Pro",
+    page_title="Vital Forex",
     page_icon="⚡",
     layout="wide",
 )
