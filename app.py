@@ -8,7 +8,7 @@ from technical import calculate_indicators
 
 
 
-
+                                        st.image("logo.png", width=250)
 
 # Page Configuration
 st.set_page_config(
